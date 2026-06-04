@@ -27,7 +27,16 @@ const BOOKSTORES = [
   { id: "quailridge-raleigh", name: "Quail Ridge Books", address: "3801 Computer Dr", city: "Raleigh", state: "NC", zip: "27609", lat: 35.8197, lon: -78.6756, website: "https://www.quailridgebooks.com" },
   { id: "skylight-la", name: "Skylight Books", address: "1818 N Vermont Ave", city: "Los Angeles", state: "CA", zip: "90027", lat: 34.1038, lon: -118.2917, website: "https://www.skylightbooks.com" },
   { id: "lastbookstore-la", name: "The Last Bookstore", address: "453 S Spring St", city: "Los Angeles", state: "CA", zip: "90013", lat: 34.0477, lon: -118.2498, website: "https://www.lastbookstore.la" },
-  { id: "acappella-atlanta", name: "A Cappella Books", address: "208 Haralson Ave NE", city: "Atlanta", state: "GA", zip: "30307", lat: 33.7594, lon: -84.3541, website: "https://www.acappellabooks.com" }
+  { id: "acappella-atlanta", name: "A Cappella Books", address: "208 Haralson Ave NE", city: "Atlanta", state: "GA", zip: "30307", lat: 33.7594, lon: -84.3541, website: "https://www.acappellabooks.com" },
+  { id: "bn-unionsq-nyc", name: "Barnes & Noble", address: "33 E 17th St", city: "New York", state: "NY", zip: "10003", lat: 40.7371, lon: -73.9903, website: "https://www.barnesandnoble.com" },
+  { id: "bn-thegrove-la", name: "Barnes & Noble", address: "189 The Grove Dr", city: "Los Angeles", state: "CA", zip: "90036", lat: 34.0722, lon: -118.3582, website: "https://www.barnesandnoble.com" },
+  { id: "bn-webster-chicago", name: "Barnes & Noble", address: "1441 W Webster Ave", city: "Chicago", state: "IL", zip: "60614", lat: 41.9218, lon: -87.6645, website: "https://www.barnesandnoble.com" },
+  { id: "bn-prudential-boston", name: "Barnes & Noble", address: "800 Boylston St", city: "Boston", state: "MA", zip: "02199", lat: 42.3484, lon: -71.0825, website: "https://www.barnesandnoble.com" },
+  { id: "bn-pacific-seattle", name: "Barnes & Noble", address: "600 Pine St", city: "Seattle", state: "WA", zip: "98101", lat: 47.6122, lon: -122.3351, website: "https://www.barnesandnoble.com" },
+  { id: "bn-glendale-denver", name: "Barnes & Noble", address: "960 S Colorado Blvd", city: "Denver", state: "CO", zip: "80246", lat: 39.7001, lon: -104.9406, website: "https://www.barnesandnoble.com" },
+  { id: "bn-lloyd-portland", name: "Barnes & Noble", address: "1317 Lloyd Center", city: "Portland", state: "OR", zip: "97232", lat: 45.5321, lon: -122.6534, website: "https://www.barnesandnoble.com" },
+  { id: "bam-kennesaw-atlanta", name: "Books-A-Million", address: "4400 Cobb Pkwy NW", city: "Kennesaw", state: "GA", zip: "30152", lat: 34.0242, lon: -84.6190, website: "https://www.booksamillion.com" },
+  { id: "bam-ftlauderdale-miami", name: "Books-A-Million", address: "1350 W Sunrise Blvd", city: "Fort Lauderdale", state: "FL", zip: "33311", lat: 26.1378, lon: -80.1601, website: "https://www.booksamillion.com" }
 ];
 
 const CURATED_BOOKS = [
@@ -351,7 +360,7 @@ function generateEvents() {
 }
 
 function bookbookstoreName(name) {
-  return name.endsWith("Bookstore") || name.endsWith("Booksellers") || name.endsWith("Company") || name.endsWith("Store") || name.endsWith("Books") ? name : `${name} Bookstore`;
+  return name.endsWith("Bookstore") || name.endsWith("Booksellers") || name.endsWith("Company") || name.endsWith("Store") || name.endsWith("Books") || name.includes("Noble") || name.includes("Million") ? name : `${name} Bookstore`;
 }
 
 async function run() {
