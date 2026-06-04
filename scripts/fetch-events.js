@@ -316,73 +316,39 @@ function bookbookstoreName(name) {
 function generateEventWebsite(bookstore, book) {
   const name = bookstore.name;
   const author = book.author;
-  const title = book.title;
   
-  // Specific elite exceptions
-  if (author === "Elise Kova" && Math.random() < 0.7) {
+  // Elise Kova direct events site fallback
+  if (author === "Elise Kova" && Math.random() < 0.5) {
     return "https://www.elisekova.com/events/";
   }
-  
-  // Extract domain from bookstore website
-  const domain = bookstore.website.replace(/https?:\/\/(www\.)?/, '');
 
-  // Conventions and Balls (scoped search is best)
-  if (name.includes("Comic-Con") || name.includes("Con")) {
-    return `https://www.google.com/search?q=site:${domain}+${encodeURIComponent('"' + author + '" ' + title)}`;
-  }
-  if (name.includes("Fabled")) {
-    return `https://www.google.com/search?q=site:fabledfantasyevents.com+${encodeURIComponent('"' + author + '"')}`;
-  }
-  
-  // Roll a dice: 60% chance of a high-precision site-scoped Google search fallback to find the specific event page.
-  // 40% chance of returning the direct store calendar link.
-  const useGoogleFallback = Math.random() < 0.60;
-  
-  if (useGoogleFallback) {
-    // If it's B&N or BAM, use their specific event subpaths
-    if (name.includes("Barnes & Noble")) {
-      return `https://www.google.com/search?q=site:stores.barnesandnoble.com+${encodeURIComponent('"' + author + '"')}`;
-    }
-    if (name.includes("Books-A-Million")) {
-      return `https://www.google.com/search?q=site:booksamillion.com/events+${encodeURIComponent('"' + author + '"')}`;
-    }
-    // General store-scoped search fallback
-    return `https://www.google.com/search?q=site:${domain}+${encodeURIComponent('"' + author + '"')}`;
-  }
-  
-  // Direct calendar directories for stores (40% path)
-  if (name.includes("Strand")) return "https://www.strandbooks.com/events/";
-  if (name.includes("Powell's")) return "https://www.powells.com/events";
-  if (name.includes("BookPeople")) return "https://www.bookpeople.com/event";
-  if (name.includes("Tattered Cover")) return "https://www.tatteredcover.com/event";
-  if (name.includes("Harvard Book Store")) return "https://www.harvard.com/events/";
-  if (name.includes("Politics and Prose")) return "https://www.politics-prose.com/events";
-  if (name.includes("Elliott Bay")) return "https://www.elliottbaybook.com/events";
-  if (name.includes("Vroman's")) return "https://www.vromansbookstore.com/event";
-  if (name.includes("Books & Books")) return "https://booksandbooks.com/events/";
-  if (name.includes("Parnassus")) return "https://www.parnassusbooks.net/event";
-  if (name.includes("Magers & Quinn")) return "https://www.magersandquinn.com/events";
-  if (name.includes("Third Place")) return "https://www.thirdplacebooks.com/event";
-  if (name.includes("Skylight")) return "https://www.skylightbooks.com/event";
-  if (name.includes("Last Bookstore")) return "https://www.lastbookstore.la/events";
-  if (name.includes("Boulder Book Store")) return "https://www.boulderbookstore.net/event";
-  if (name.includes("Bookshop Santa Cruz")) return "https://www.bookshopsantacruz.com/event";
-  
-  if (name.includes("Barnes & Noble")) {
-    return `https://www.google.com/search?q=site:stores.barnesandnoble.com+${encodeURIComponent('"' + author + '"')}`;
-  }
-  if (name.includes("Books-A-Million")) {
-    return `https://www.google.com/search?q=site:booksamillion.com/events+${encodeURIComponent('"' + author + '"')}`;
-  }
-
-  // Eventbrite option
+  // Roll a dice: 50% link directly to bookstore website (or its events calendar), 50% link to a robust Google Search query
   if (Math.random() < 0.5) {
-    return `https://www.eventbrite.com/d/united-states/${encodeURIComponent(author + ' signing')}/`;
+    // Return direct bookstore website or events calendar
+    if (name.includes("Strand")) return "https://www.strandbooks.com/events/";
+    if (name.includes("Powell's")) return "https://www.powells.com/events";
+    if (name.includes("BookPeople")) return "https://www.bookpeople.com/event";
+    if (name.includes("Tattered Cover")) return "https://www.tatteredcover.com/event";
+    if (name.includes("Harvard Book Store")) return "https://www.harvard.com/events/";
+    if (name.includes("Politics and Prose")) return "https://www.politics-prose.com/events";
+    if (name.includes("Elliott Bay")) return "https://www.elliottbaybook.com/events";
+    if (name.includes("Vroman's")) return "https://www.vromansbookstore.com/event";
+    if (name.includes("Books & Books")) return "https://booksandbooks.com/events/";
+    if (name.includes("Parnassus")) return "https://www.parnassusbooks.net/event";
+    if (name.includes("Magers & Quinn")) return "https://www.magersandquinn.com/events";
+    if (name.includes("Third Place")) return "https://www.thirdplacebooks.com/event";
+    if (name.includes("Skylight")) return "https://www.skylightbooks.com/event";
+    if (name.includes("Last Bookstore")) return "https://www.lastbookstore.la/events";
+    if (name.includes("Boulder Book Store")) return "https://www.boulderbookstore.net/event";
+    if (name.includes("Bookshop Santa Cruz")) return "https://www.bookshopsantacruz.com/event";
+    
+    // Otherwise, bookstore main website
+    return bookstore.website;
+  } else {
+    // Return simple, robust Google search query for the author event at this bookstore
+    const query = `"${author}" book event at "${name}"`;
+    return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
   }
-  
-  // Ultimate robust fallback: Scoped Google Search query that locates the exact event details
-  const searchQuery = `"${author}" book signing event at "${name}" ${bookstore.city}`;
-  return `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
 }
 
 async function run() {
