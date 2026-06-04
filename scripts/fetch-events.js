@@ -52,6 +52,7 @@ const VENUES = [
 ];
 
 const TARGET_AUTHORS = [
+  // Romantasy
   { name: "Elise Kova", genre: "Romantasy" },
   { name: "Sarah J. Maas", genre: "Romantasy" },
   { name: "Rebecca Yarros", genre: "Romantasy" },
@@ -61,21 +62,59 @@ const TARGET_AUTHORS = [
   { name: "Rebecca Ross", genre: "Romantasy" },
   { name: "Tracy Wolff", genre: "Romantasy" },
   { name: "Hannah Nicole Maehrer", genre: "Romantasy" },
-  { name: "Leigh Bardugo", genre: "Fantasy" },
-  { name: "Travis Baldree", genre: "Fantasy" },
+  { name: "Scarlett St. Clair", genre: "Romantasy" },
+  { name: "Raven Kennedy", genre: "Romantasy" },
+  { name: "Laura Thalassa", genre: "Romantasy" },
+  { name: "Katee Robert", genre: "Romantasy" },
+  
+  // Fantasy & Sci-Fi
+  { name: "Brandon Sanderson", genre: "Fantasy" },
   { name: "Neil Gaiman", genre: "Fantasy" },
+  { name: "Patrick Rothfuss", genre: "Fantasy" },
+  { name: "George R.R. Martin", genre: "Fantasy" },
+  { name: "Travis Baldree", genre: "Fantasy" },
+  { name: "V.E. Schwab", genre: "Fantasy" },
+  { name: "R.F. Kuang", genre: "Fantasy" },
+  { name: "Andy Weir", genre: "Fantasy" },
+  { name: "Blake Crouch", genre: "Fantasy" },
+  
+  // Romance
   { name: "Emily Henry", genre: "Romance" },
-  { name: "Kristin Hannah", genre: "Historical Fiction" },
-  { name: "James Clear", genre: "Non-Fiction" },
+  { name: "Colleen Hoover", genre: "Romance" },
+  { name: "Ali Hazelwood", genre: "Romance" },
+  { name: "Abby Jimenez", genre: "Romance" },
+  { name: "Taylor Jenkins Reid", genre: "Romance" },
+  
+  // Mystery & Thriller
+  { name: "Stephen King", genre: "Mystery & Thriller" },
+  { name: "Gillian Flynn", genre: "Mystery & Thriller" },
+  { name: "Alex Michaelides", genre: "Mystery & Thriller" },
+  { name: "Lucy Foley", genre: "Mystery & Thriller" },
+  { name: "Freida McFadden", genre: "Mystery & Thriller" },
+  
+  // General Fiction
   { name: "Amor Towles", genre: "Fiction" },
-  { name: "David Grann", genre: "History" }
+  { name: "James McBride", genre: "Fiction" },
+  { name: "Anthony Doerr", genre: "Fiction" },
+  { name: "Fredrik Backman", genre: "Fiction" },
+  { name: "Kristin Hannah", genre: "Fiction" },
+  { name: "Isabel Allende", genre: "Fiction" },
+  
+  // Non-Fiction
+  { name: "James Clear", genre: "Non-Fiction" },
+  { name: "Rick Rubin", genre: "Non-Fiction" },
+  { name: "Malcolm Gladwell", genre: "Non-Fiction" },
+  { name: "Michelle Obama", genre: "Non-Fiction" },
+  { name: "Yuval Noah Harari", genre: "Non-Fiction" }
 ];
 
 // Fallback books data in case Google Books API fails or throttles
 const FALLBACK_BOOKS = [
+  // Romantasy
   { title: "A Deal with the Elf King", author: "Elise Kova", genre: "Romantasy", isbn: "9781949694284", description: "A cozy, standalone romantic fantasy inspired by Beauty and the Beast and Hades and Persephone. Luella is an herbologist chosen to marry the Elf King to maintain the peace." },
   { title: "Air Awakens", author: "Elise Kova", genre: "Romantasy", isbn: "9781932549935", description: "A library apprentice with sleeping magical powers is caught between a dangerous war, a mysterious crown prince, and the awakening of her wind magic." },
   { title: "A Court of Thorns and Roses", author: "Sarah J. Maas", genre: "Romantasy", isbn: "9781619635180", description: "Feyre is dragged to a magical land of faeries by a mysterious beast-like lord, discovering a romance that could save his dying realm." },
+  { title: "Crown of Midnight", author: "Sarah J. Maas", genre: "Romantasy", isbn: "9781619630628", description: "In the second volume of Throne of Glass, assassin Celaena Sardothien must navigate politics, romance, and dark magic in the royal castle." },
   { title: "Iron Flame", author: "Rebecca Yarros", genre: "Romantasy", isbn: "9781649374172", description: "Violet Sorrengail must survive the brutal dragon-rider training while hiding secrets that could destroy her homeland." },
   { title: "Onyx Storm", author: "Rebecca Yarros", genre: "Romantasy", isbn: "9781649374189", description: "The thrilling continuation of the dragon rider Empyrean series, filled with war, romance, and sacrifices." },
   { title: "From Blood and Ash", author: "Jennifer L. Armentrout", genre: "Romantasy", isbn: "9781952446108", description: "A Maiden chosen from birth to usher in a new era is guarded by a handsome commander, leading her to question her duty." },
@@ -84,14 +123,43 @@ const FALLBACK_BOOKS = [
   { title: "Divine Rivals", author: "Rebecca Ross", genre: "Romantasy", isbn: "9781250874580", description: "Two rival journalists find love and magic connection through typing letters during a brutal war of the gods." },
   { title: "Crave", author: "Tracy Wolff", genre: "Romantasy", isbn: "9781640636118", description: "A human girl is sent to a boarding school in Alaska, only to discover it is populated by vampires, witches, and shape-shifters." },
   { title: "Assistant to the Villain", author: "Hannah Nicole Maehrer", genre: "Romantasy", isbn: "9781649377135", description: "A whimsical, cozy romantic fantasy about an optimistic assistant who works for a notoriously grumpy and chaotic dark lord." },
-  { title: "The Familiar", author: "Leigh Bardugo", genre: "Fantasy", isbn: "9781250333858", description: "In the Spanish Golden Age, a kitchen maid with secret magical talents finds herself caught in a game of ambition and romance." },
-  { title: "Bookshops & Bonedust", author: "Travis Baldree", genre: "Fantasy", isbn: "9781250881588", description: "In this heartwarming prequel, an injured young Viv is forced to spend her recovery in a seaside town, stumbling into a struggling bookstore." },
-  { title: "The Hobbit", author: "J.R.R. Tolkien", genre: "Fantasy", isbn: "9780345339683", description: "Bilbo Baggins, a quiet hobbit, is swept into a dangerous quest by Gandalf to reclaim a treasure from the dragon Smaug." },
+  
+  // Fantasy & Sci-Fi
+  { title: "Mistborn: The Final Empire", author: "Brandon Sanderson", genre: "Fantasy", isbn: "9780765350381", description: "A young street thief is recruited by a charismatic rebel to use magic and overthrow a thousand-year-old immortal emperor." },
+  { title: "The Way of Kings", author: "Brandon Sanderson", genre: "Fantasy", isbn: "9780765365279", description: "In a storm-swept world of Roshar, three individuals lead separate struggles that could decide the fate of their world." },
+  { title: "The Ocean at the End of the Lane", author: "Neil Gaiman", genre: "Fantasy", isbn: "9780062255655", description: "A man returns to his childhood home and remembers the magical, terrifying events of his youth, when local neighbors protected him." },
+  { title: "The Name of the Wind", author: "Patrick Rothfuss", genre: "Fantasy", isbn: "9780756404741", description: "The legendary wizard Kvothe recounts his youth, his magic training, and his quest to find the mythical killers of his family." },
+  { title: "A Game of Thrones", author: "George R.R. Martin", genre: "Fantasy", isbn: "9780553593716", description: "The epic struggle for the Iron Throne of Westeros begins among noble families amidst threats of winter and legendary creatures." },
+  { title: "Legends & Lattes", author: "Travis Baldree", genre: "Fantasy", isbn: "9781250870889", description: "An tired orc barbarian decides to hang up her sword and open the first-ever coffee shop in a fantasy city, finding friendship and romance." },
+  { title: "Bookshops & Bonedust", author: "Travis Baldree", genre: "Fantasy", isbn: "9781250881588", description: "In this heartwarming prequel, an injured young Viv is forced to spend her recovery in a seaside town, struggling in a local bookstore." },
+  { title: "The Invisible Life of Addie LaRue", author: "V.E. Schwab", genre: "Fantasy", isbn: "9780765387561", description: "A young French woman makes a bargain to live forever, cursed to be forgotten by everyone she meets, until she meets a boy who remembers." },
+  { title: "Babel", author: "R.F. Kuang", genre: "Fantasy", isbn: "9780063029057", description: "An orphan from Canton is brought to Oxford's Institute of Translation, finding himself torn between academic life and a revolutionary society." },
+  { title: "Project Hail Mary", author: "Andy Weir", genre: "Fantasy", isbn: "9780593135204", description: "A lone astronaut wakes up on a spaceship with amnesia, realizing he must use science to solve an extinction-level threat to Earth." },
+  { title: "Dark Matter", author: "Blake Crouch", genre: "Fantasy", isbn: "9781101904244", description: "A physics professor is kidnapped and wakes up in a parallel universe where his life took an entirely different, high-tech path." },
+  
+  // Romance
   { title: "Funny Story", author: "Emily Henry", genre: "Romance", isbn: "9780593441282", description: "Daphne finds herself stranded in a beautiful Michigan town sharing a roof with her ex-fiance's partner's ex, Miles." },
-  { title: "The Women", author: "Kristin Hannah", genre: "Historical Fiction", isbn: "9781250178633", description: "A deeply moving tribute to the army nurses who served in the Vietnam War, exploring patriotism, trauma, and resilience." },
+  { title: "Book Lovers", author: "Emily Henry", genre: "Romance", isbn: "9780593334836", description: "A cutthroat literary agent and a cynical editor collide in a small North Carolina town, challenging their own stories." },
+  { title: "It Ends with Us", author: "Colleen Hoover", genre: "Romance", isbn: "9781501110368", description: "Lily falls in love with a brilliant neurosurgeon, but the return of her first love forces her to make painful decisions." },
+  { title: "The Love Hypothesis", author: "Ali Hazelwood", genre: "Romance", isbn: "9780593336823", description: "A biology PhD student enters a fake dating arrangement with a notorious, hot professor to convince her friends she is in love." },
+  
+  // Mystery & Thriller
+  { title: "The Shining", author: "Stephen King", genre: "Mystery & Thriller", isbn: "9780307743657", description: "A writer takes a job as the winter caretaker of an isolated historic hotel, unaware of the malevolent supernatural forces within." },
+  { title: "Fairy Tale", author: "Stephen King", genre: "Mystery & Thriller", isbn: "9781668002179", description: "A high school boy inherits a key to a parallel world where good and evil are locked in a monumental battle." },
+  { title: "Gone Girl", author: "Gillian Flynn", genre: "Mystery & Thriller", isbn: "9780307588371", description: "On their fifth wedding anniversary, a husband becomes the prime suspect when his beautiful wife mysteriously disappears." },
+  { title: "The Silent Patient", author: "Alex Michaelides", genre: "Mystery & Thriller", isbn: "9781250301697", description: "A famous painter shoots her husband and refuses to speak a single word, leaving a criminal psychotherapist obsessed with uncovering her motive." },
+  { title: "The Guest List", author: "Lucy Foley", genre: "Mystery & Thriller", isbn: "9780062868824", description: "Guests gather for a glamorous wedding on a remote Irish island, but old grudges, storms, and a murder disrupt the celebration." },
+  
+  // General Fiction
+  { title: "A Gentleman in Moscow", author: "Amor Towles", genre: "Fiction", isbn: "9780143110439", description: "In 1922, a Russian aristocrat is sentenced by a Bolshevik tribunal to spend the rest of his life inside a luxurious hotel." },
+  { title: "The Heaven & Earth Grocery Store", author: "James McBride", genre: "Fiction", isbn: "9780593422946", description: "Secrets are revealed in a small, diverse Pennsylvania neighborhood when a skeleton is discovered at the bottom of a well." },
+  { title: "All the Light We Cannot See", author: "Anthony Doerr", genre: "Fiction", isbn: "9781476746586", description: "A blind French girl and a young German soldier's paths cross in occupied France during the final days of World War II." },
+  { title: "The Women", author: "Kristin Hannah", genre: "Fiction", isbn: "9781250178633", description: "A deeply moving tribute to the army nurses who served in the Vietnam War, exploring patriotism, trauma, and resilience." },
+  
+  // Non-Fiction
   { title: "Atomic Habits", author: "James Clear", genre: "Non-Fiction", isbn: "9780735211292", description: "Atomic Habits offers a proven framework for improving every day, teaching how to build good habits and break bad ones." },
-  { title: "Table for Two", author: "Amor Towles", genre: "Fiction", isbn: "9780593296370", description: "A collection of six stories set in New York City and a novella set in Golden Age Hollywood, exploring chance encounters." },
-  { title: "The Wager", author: "David Grann", genre: "History", isbn: "9780385534260", description: "A true story of shipwreck, mutiny, and survival in the 18th century, charting a British vessel lost on a desolate island." }
+  { title: "The Creative Act: A Way of Being", author: "Rick Rubin", genre: "Non-Fiction", isbn: "9780593652886", description: "A legendary music producer shares his wisdom on the creative process, offering a guide to accessing our innate creativity." },
+  { title: "Becoming", author: "Michelle Obama", genre: "Non-Fiction", isbn: "9781524763138", description: "A deeply personal memoir by the former First Lady of the United States, charting her journey from Chicago to the White House." }
 ];
 
 const EVENT_TYPES = [
@@ -163,7 +231,7 @@ function generateEvents(booksList) {
         if (roll < 0.4) eventType = EVENT_TYPES[0];
         else if (roll < 0.7) eventType = EVENT_TYPES[2];
         else eventType = EVENT_TYPES[5];
-      } else if (book.title === "The Hobbit" || book.genre === "Fantasy" || book.genre === "Romantasy") {
+      } else if (book.title.includes("Hobbit") || book.genre === "Fantasy" || book.genre === "Romantasy") {
         const roll = Math.random();
         if (roll < 0.5) eventType = EVENT_TYPES[2]; // Book Club
         else if (roll < 0.8) eventType = EVENT_TYPES[0]; // Signing
@@ -246,42 +314,75 @@ function bookbookstoreName(name) {
 }
 
 function generateEventWebsite(bookstore, book) {
-  const query = `${book.author} ${book.title}`;
-  const encodedQuery = encodeURIComponent(query);
   const name = bookstore.name;
+  const author = book.author;
+  const title = book.title;
   
-  if (book.author === "Elise Kova" && Math.random() < 0.7) {
+  // Specific elite exceptions
+  if (author === "Elise Kova" && Math.random() < 0.7) {
     return "https://www.elisekova.com/events/";
   }
-  if (name.includes("Fabled")) {
-    return `https://www.google.com/search?q=site:fabledfantasyevents.com+${encodeURIComponent(book.author)}`;
+  
+  // Extract domain from bookstore website
+  const domain = bookstore.website.replace(/https?:\/\/(www\.)?/, '');
+
+  // Conventions and Balls (scoped search is best)
+  if (name.includes("Comic-Con") || name.includes("Con")) {
+    return `https://www.google.com/search?q=site:${domain}+${encodeURIComponent('"' + author + '" ' + title)}`;
   }
+  if (name.includes("Fabled")) {
+    return `https://www.google.com/search?q=site:fabledfantasyevents.com+${encodeURIComponent('"' + author + '"')}`;
+  }
+  
+  // Roll a dice: 60% chance of a high-precision site-scoped Google search fallback to find the specific event page.
+  // 40% chance of returning the direct store calendar link.
+  const useGoogleFallback = Math.random() < 0.60;
+  
+  if (useGoogleFallback) {
+    // If it's B&N or BAM, use their specific event subpaths
+    if (name.includes("Barnes & Noble")) {
+      return `https://www.google.com/search?q=site:stores.barnesandnoble.com+${encodeURIComponent('"' + author + '"')}`;
+    }
+    if (name.includes("Books-A-Million")) {
+      return `https://www.google.com/search?q=site:booksamillion.com/events+${encodeURIComponent('"' + author + '"')}`;
+    }
+    // General store-scoped search fallback
+    return `https://www.google.com/search?q=site:${domain}+${encodeURIComponent('"' + author + '"')}`;
+  }
+  
+  // Direct calendar directories for stores (40% path)
+  if (name.includes("Strand")) return "https://www.strandbooks.com/events/";
+  if (name.includes("Powell's")) return "https://www.powells.com/events";
+  if (name.includes("BookPeople")) return "https://www.bookpeople.com/event";
+  if (name.includes("Tattered Cover")) return "https://www.tatteredcover.com/event";
+  if (name.includes("Harvard Book Store")) return "https://www.harvard.com/events/";
+  if (name.includes("Politics and Prose")) return "https://www.politics-prose.com/events";
+  if (name.includes("Elliott Bay")) return "https://www.elliottbaybook.com/events";
+  if (name.includes("Vroman's")) return "https://www.vromansbookstore.com/event";
+  if (name.includes("Books & Books")) return "https://booksandbooks.com/events/";
+  if (name.includes("Parnassus")) return "https://www.parnassusbooks.net/event";
+  if (name.includes("Magers & Quinn")) return "https://www.magersandquinn.com/events";
+  if (name.includes("Third Place")) return "https://www.thirdplacebooks.com/event";
+  if (name.includes("Skylight")) return "https://www.skylightbooks.com/event";
+  if (name.includes("Last Bookstore")) return "https://www.lastbookstore.la/events";
+  if (name.includes("Boulder Book Store")) return "https://www.boulderbookstore.net/event";
+  if (name.includes("Bookshop Santa Cruz")) return "https://www.bookshopsantacruz.com/event";
+  
   if (name.includes("Barnes & Noble")) {
-    return `https://www.barnesandnoble.com/s/${encodedQuery}`;
+    return `https://www.google.com/search?q=site:stores.barnesandnoble.com+${encodeURIComponent('"' + author + '"')}`;
   }
   if (name.includes("Books-A-Million")) {
-    return `https://www.booksamillion.com/search?query=${encodedQuery}`;
+    return `https://www.google.com/search?q=site:booksamillion.com/events+${encodeURIComponent('"' + author + '"')}`;
   }
-  if (name.includes("Strand")) {
-    return `https://www.strandbooks.com/search?query=${encodedQuery}`;
-  }
-  if (name.includes("Powell's")) {
-    return `https://www.powells.com/searchresults?keyword=${encodedQuery}`;
-  }
-  if (name.includes("Third Place")) {
-    return `https://www.thirdplacebooks.com/search/site/${encodedQuery}`;
-  }
-  if (name.includes("Comic-Con") || name.includes("Con")) {
-    const domain = bookstore.website.replace(/https?:\/\/(www\.)?/, '');
-    return `https://www.google.com/search?q=site:${domain}+${encodeURIComponent(book.author + ' ' + book.title)}`;
+
+  // Eventbrite option
+  if (Math.random() < 0.5) {
+    return `https://www.eventbrite.com/d/united-states/${encodeURIComponent(author + ' signing')}/`;
   }
   
-  // Eventbrite fallback
-  if (Math.random() < 0.4) {
-    return `https://www.eventbrite.com/d/united-states/${encodeURIComponent(book.author + ' book signing')}/`;
-  }
-  
-  return `${bookstore.website}/search/site/${encodedQuery}`;
+  // Ultimate robust fallback: Scoped Google Search query that locates the exact event details
+  const searchQuery = `"${author}" book signing event at "${name}" ${bookstore.city}`;
+  return `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
 }
 
 async function run() {

@@ -24,6 +24,29 @@ const CITY_PRESETS = {
   "25.7617,-80.1918": { name: "Miami, FL", lat: 25.7617, lon: -80.1918 }
 };
 
+// Author Official Websites
+const AUTHOR_WEBSITES = {
+  "Elise Kova": "https://www.elisekova.com/events/",
+  "Sarah J. Maas": "https://sarahjmaas.com/",
+  "Rebecca Ross": "https://rebeccarossauthor.com/",
+  "Rebecca Yarros": "https://www.rebeccayarros.com/",
+  "Jennifer L. Armentrout": "https://jenniferlarmentrout.com/",
+  "Brandon Sanderson": "https://www.brandonsanderson.com/",
+  "Travis Baldree": "https://travisbaldree.com/",
+  "V.E. Schwab": "https://www.veschwab.com/",
+  "R.F. Kuang": "https://www.rfkuang.com/",
+  "Colleen Hoover": "https://www.colleenhoover.com/",
+  "Emily Henry": "https://www.emilyhenrybooks.com/",
+  "Abby Jimenez": "https://www.abbyjimenez.com/",
+  "Ali Hazelwood": "https://alihazelwood.com/",
+  "Taylor Jenkins Reid": "https://www.taylorjenkinsreid.com/",
+  "Stephen King": "https://stephenking.com/",
+  "Amor Towles": "https://amortowles.com/",
+  "James Clear": "https://jamesclear.com/",
+  "Rick Rubin": "https://rickrubin.com/",
+  "Michelle Obama": "https://becomingmichelleobama.com/"
+};
+
 // UI Elements
 const elements = {
   presetCity: document.getElementById('preset-city'),
@@ -47,7 +70,8 @@ const elements = {
   btnResetFilters: document.getElementById('btn-reset-filters'),
   btnClearFilters: document.getElementById('btn-clear-filters'),
   filterAuthor: document.getElementById('filter-author'),
-  ignoreDistance: document.getElementById('ignore-distance')
+  ignoreDistance: document.getElementById('ignore-distance'),
+  authorSearchFallback: document.getElementById('author-search-fallback')
 };
 
 // --- GEOLOCATION & DISTANCE ---
@@ -190,6 +214,10 @@ function applyFiltersAndRender() {
     elements.emptyState.classList.add('hidden');
     renderNextBatch();
   }
+
+  // Update dynamic Google Search Fallbacks Banner
+  const queryRaw = elements.searchText.value;
+  updateAuthorFallbackWidget(selectedAuthor, queryRaw);
 }
 
 function renderNextBatch() {
@@ -506,6 +534,128 @@ function populateAuthorDropdown() {
     opt.textContent = author;
     elements.filterAuthor.appendChild(opt);
   });
+}
+
+// --- GOOGLE SEARCH FALLBACK WIDGET ---
+
+function updateAuthorFallbackWidget(selectedAuthor, query) {
+  const fallbackContainer = elements.authorSearchFallback;
+  if (!fallbackContainer) return;
+
+  let targetAuthor = "";
+  
+  if (selectedAuthor && selectedAuthor !== 'all') {
+    targetAuthor = selectedAuthor;
+  } else if (query && query.trim().length > 0) {
+    const trimmedQuery = query.trim();
+    // Check if query matches any known author in our events database
+    const queryLower = trimmedQuery.toLowerCase();
+    const knownAuthors = [...new Set(events.map(evt => evt.author))];
+    const matchedAuthor = knownAuthors.find(auth => 
+      auth.toLowerCase().includes(queryLower) || queryLower.includes(auth.toLowerCase())
+    );
+    
+    if (matchedAuthor) {
+      targetAuthor = matchedAuthor;
+    } else if (trimmedQuery.split(/\s+/).length >= 2 || trimmedQuery.length >= 4) {
+      // Use search text if it's long enough to be an author's name
+      targetAuthor = trimmedQuery;
+    }
+  }
+
+  if (!targetAuthor) {
+    fallbackContainer.classList.add('hidden');
+    fallbackContainer.innerHTML = '';
+    return;
+  }
+
+  fallbackContainer.classList.remove('hidden');
+  
+  const links = [];
+  
+  // 1. Official site mapping
+  const officialSite = AUTHOR_WEBSITES[targetAuthor];
+  if (officialSite) {
+    links.push({
+      label: "Official Website",
+      url: officialSite,
+      icon: "fa-globe"
+    });
+  } else {
+    links.push({
+      label: "Find Official Site",
+      url: `https://www.google.com/search?q=${encodeURIComponent('"' + targetAuthor + '" official author website events')}`,
+      icon: "fa-globe"
+    });
+  }
+
+  // 2. Google Search
+  links.push({
+    label: "Google Tour Search",
+    url: `https://www.google.com/search?q=${encodeURIComponent('"' + targetAuthor + '" book signing event tour 2026')}`,
+    icon: "fa-google"
+  });
+
+  // 3. Eventbrite
+  links.push({
+    label: "Eventbrite Signings",
+    url: `https://www.google.com/search?q=site:eventbrite.com+${encodeURIComponent('"' + targetAuthor + '"')}`,
+    icon: "fa-ticket"
+  });
+
+  // 4. Barnes & Noble Events
+  links.push({
+    label: "Barnes & Noble",
+    url: `https://www.google.com/search?q=site:stores.barnesandnoble.com+${encodeURIComponent('"' + targetAuthor + '"')}`,
+    icon: "fa-store"
+  });
+
+  // 5. Books-A-Million
+  links.push({
+    label: "Books-A-Million",
+    url: `https://www.google.com/search?q=site:booksamillion.com/events+${encodeURIComponent('"' + targetAuthor + '"')}`,
+    icon: "fa-store"
+  });
+
+  // 6. Fabled Fantasy Events
+  links.push({
+    label: "Fabled Events",
+    url: `https://www.google.com/search?q=site:fabledfantasyevents.com+${encodeURIComponent('"' + targetAuthor + '"')}`,
+    icon: "fa-wand-magic-sparkles"
+  });
+
+  // 7. Convention Panels (Dragon Con, Comic Con)
+  links.push({
+    label: "Conventions & Panels",
+    url: `https://www.google.com/search?q=site:dragoncon.org+OR+site:comic-con.org+OR+site:newyorkcomiccon.com+OR+site:emeraldcitycomiccon.com+${encodeURIComponent('"' + targetAuthor + '"')}`,
+    icon: "fa-users"
+  });
+
+  fallbackContainer.innerHTML = `
+    <div class="fallback-banner-header">
+      <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
+      <span>Looking for more events by ${escapeHtml(targetAuthor)}?</span>
+    </div>
+    <p class="fallback-banner-text">
+      Because local calendars change frequently, try searching these major ticketing & venue directories on Google for <strong>${escapeHtml(targetAuthor)}</strong>:
+    </p>
+    <div class="fallback-links-container">
+      ${links.map(lnk => `
+        <a href="${lnk.url}" target="_blank" class="fallback-link-btn" title="Search for ${escapeHtml(targetAuthor)} on ${lnk.label}">
+          <i class="fa-solid ${lnk.icon}"></i> ${lnk.label}
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 // Kickstart application when DOM is ready

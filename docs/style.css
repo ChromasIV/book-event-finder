@@ -1,4 +1,4 @@
-/* Theme Version: 1.0.8 */
+/* Theme Version: 1.0.9 */
 :root {
   --bg-main: #060913;
   --bg-card: rgba(13, 19, 36, 0.7);
@@ -1078,4 +1078,79 @@ footer {
 
 .checkbox-container input[type="checkbox"]:checked + .checkbox-label {
   color: var(--primary) !important;
+}
+
+/* Fallback Banner Widget */
+.fallback-banner {
+  background: linear-gradient(135deg, rgba(223, 168, 87, 0.08) 0%, rgba(60, 95, 175, 0.05) 100%);
+  border: 1px solid rgba(223, 168, 87, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.fallback-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-family-title);
+  font-size: 1.1rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.fallback-banner-header i {
+  font-size: 1.2rem;
+}
+
+.fallback-banner-text {
+  font-size: 0.88rem;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.fallback-links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.fallback-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-family: var(--font-family-heading);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.fallback-link-btn:hover {
+  background: rgba(223, 168, 87, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.fallback-link-btn i {
+  font-size: 0.85rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
