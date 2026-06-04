@@ -190,6 +190,48 @@ const CURATED_BOOKS = [
     coverId: "8355215",
     description: "Bilbo Baggins, a quiet and home-loving hobbit, is swept into a dangerous quest by the wizard Gandalf and a company of dwarves to reclaim their treasure from the fierce dragon Smaug.",
     isbn: "9780345339683"
+  },
+  {
+    title: "A Deal with the Elf King",
+    author: "Elise Kova",
+    genre: "Romantasy",
+    description: "A cozy, standalone romantic fantasy inspired by Beauty and the Beast and Hades and Persephone. Luella is an herbologist chosen to marry the Elf King to maintain the peace.",
+    isbn: "9781949694284"
+  },
+  {
+    title: "Air Awakens",
+    author: "Elise Kova",
+    genre: "Romantasy",
+    description: "A library apprentice with sleeping magical powers is caught between a dangerous war, a mysterious crown prince, and the awakening of her wind magic.",
+    isbn: "9781932549935"
+  },
+  {
+    title: "A Court of Thorns and Roses",
+    author: "Sarah J. Maas",
+    genre: "Romantasy",
+    description: "Feyre is dragged to a magical land of faeries by a mysterious beast-like lord, discovering a romance that could save his dying realm.",
+    isbn: "9781619635180"
+  },
+  {
+    title: "From Blood and Ash",
+    author: "Jennifer L. Armentrout",
+    genre: "Romantasy",
+    description: "A Maiden chosen from birth to usher in a new era is guarded by a handsome commander, leading her to question her duty and her desires.",
+    isbn: "9781952446108"
+  },
+  {
+    title: "The Serpent and the Wings of Night",
+    author: "Carissa Broadbent",
+    genre: "Romantasy",
+    description: "In a world ruled by vampires, an adopted human girl enters a deadly tournament of the gods to win her freedom, allying with a charming rival.",
+    isbn: "9781250343024"
+  },
+  {
+    title: "The Bridge Kingdom",
+    author: "Danielle L. Jensen",
+    genre: "Romantasy",
+    description: "A warrior princess trained to infiltrate a legendary bridge kingdom marries its king, planning to destroy it but fighting her growing love for him.",
+    isbn: "9781775338901"
   }
 ];
 
@@ -285,7 +327,7 @@ function generateEvents() {
         author: book.author,
         genre: book.genre,
         isbn: book.isbn,
-        coverUrl: book.coverId ? `https://covers.openlibrary.org/b/id/${book.coverId}-L.jpg` : `https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=300`,
+        coverUrl: book.coverId ? `https://covers.openlibrary.org/b/id/${book.coverId}-L.jpg` : `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg`,
         eventType: eventType.name,
         eventColor: eventType.color,
         eventIcon: eventType.icon,
