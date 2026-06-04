@@ -4,7 +4,7 @@ const path = require('path');
 // Reference Current Date (defaults to Execution Date)
 const START_DATE = new Date();
 
-const BOOKSTORES = [
+const VENUES = [
   { id: "strand-nyc", name: "The Strand Bookstore", address: "828 Broadway", city: "New York", state: "NY", zip: "10003", lat: 40.7332, lon: -73.9907, website: "https://www.strandbooks.com" },
   { id: "powells-portland", name: "Powell's City of Books", address: "1005 W Burnside St", city: "Portland", state: "OR", zip: "97209", lat: 45.5230, lon: -122.6814, website: "https://www.powells.com" },
   { id: "bookpeople-austin", name: "BookPeople", address: "603 N Lamar Blvd", city: "Austin", state: "TX", zip: "78703", lat: 30.2718, lon: -97.7537, website: "https://www.bookpeople.com" },
@@ -28,6 +28,8 @@ const BOOKSTORES = [
   { id: "skylight-la", name: "Skylight Books", address: "1818 N Vermont Ave", city: "Los Angeles", state: "CA", zip: "90027", lat: 34.1038, lon: -118.2917, website: "https://www.skylightbooks.com" },
   { id: "lastbookstore-la", name: "The Last Bookstore", address: "453 S Spring St", city: "Los Angeles", state: "CA", zip: "90013", lat: 34.0477, lon: -118.2498, website: "https://www.lastbookstore.la" },
   { id: "acappella-atlanta", name: "A Cappella Books", address: "208 Haralson Ave NE", city: "Atlanta", state: "GA", zip: "30307", lat: 33.7594, lon: -84.3541, website: "https://www.acappellabooks.com" },
+  
+  // Franchises
   { id: "bn-unionsq-nyc", name: "Barnes & Noble", address: "33 E 17th St", city: "New York", state: "NY", zip: "10003", lat: 40.7371, lon: -73.9903, website: "https://www.barnesandnoble.com" },
   { id: "bn-thegrove-la", name: "Barnes & Noble", address: "189 The Grove Dr", city: "Los Angeles", state: "CA", zip: "90036", lat: 34.0722, lon: -118.3582, website: "https://www.barnesandnoble.com" },
   { id: "bn-webster-chicago", name: "Barnes & Noble", address: "1441 W Webster Ave", city: "Chicago", state: "IL", zip: "60614", lat: 41.9218, lon: -87.6645, website: "https://www.barnesandnoble.com" },
@@ -37,6 +39,8 @@ const BOOKSTORES = [
   { id: "bn-lloyd-portland", name: "Barnes & Noble", address: "1317 Lloyd Center", city: "Portland", state: "OR", zip: "97232", lat: 45.5321, lon: -122.6534, website: "https://www.barnesandnoble.com" },
   { id: "bam-kennesaw-atlanta", name: "Books-A-Million", address: "4400 Cobb Pkwy NW", city: "Kennesaw", state: "GA", zip: "30152", lat: 34.0242, lon: -84.6190, website: "https://www.booksamillion.com" },
   { id: "bam-ftlauderdale-miami", name: "Books-A-Million", address: "1350 W Sunrise Blvd", city: "Fort Lauderdale", state: "FL", zip: "33311", lat: 26.1378, lon: -80.1601, website: "https://www.booksamillion.com" },
+  
+  // Conventions & Organizers
   { id: "fabled-la", name: "Fabled Fantasy Events", address: "1200 S Grand Ave", city: "Los Angeles", state: "CA", zip: "90015", lat: 34.0407, lon: -118.2690, website: "https://fabledfantasyevents.com" },
   { id: "thirdplace-lfp", name: "Third Place Books (Lake Forest Park)", address: "17171 Bothell Way NE", city: "Lake Forest Park", state: "WA", zip: "98155", lat: 47.7541, lon: -122.2781, website: "https://www.thirdplacebooks.com" },
   { id: "thirdplace-ravenna", name: "Third Place Books (Ravenna)", address: "6504 20th Ave NE", city: "Seattle", state: "WA", zip: "98115", lat: 47.6759, lon: -122.3061, website: "https://www.thirdplacebooks.com" },
@@ -47,209 +51,47 @@ const BOOKSTORES = [
   { id: "eccc-seattle", name: "Emerald City Comic Con", address: "705 Pike St", city: "Seattle", state: "WA", zip: "98101", lat: 47.6116, lon: -122.3329, website: "https://www.emeraldcitycomiccon.com" }
 ];
 
-const CURATED_BOOKS = [
-  {
-    title: "The Familiar",
-    author: "Leigh Bardugo",
-    genre: "Fantasy",
-    coverId: "14210344", // Open Library Cover ID
-    description: "In the Spanish Golden Age, a kitchen maid with secret, magical talents finds herself caught in a deadly game of ambition, heresy, and romance as she is thrust into the path of the Inquisition.",
-    isbn: "9781250333858"
-  },
-  {
-    title: "Funny Story",
-    author: "Emily Henry",
-    genre: "Romance",
-    coverId: "14299833",
-    description: "A shimmering, delightful story about Daphne, who finds herself stranded in a beautiful Michigan town sharing a roof with her ex-fiance's new partner's ex, Miles. Together, they hatch a plan.",
-    isbn: "9780593441282"
-  },
-  {
-    title: "Iron Flame",
-    author: "Rebecca Yarros",
-    genre: "Fantasy",
-    coverId: "13975730",
-    description: "The second year at Basgiath War College begins, and the stakes have never been higher. Violet Sorrengail knows she must survive the brutal training while hiding a secret that could break the kingdom.",
-    isbn: "9781649374172"
-  },
-  {
-    title: "Table for Two",
-    author: "Amor Towles",
-    genre: "Fiction",
-    coverId: "14123512",
-    description: "A collection of six stories set in New York City at the turn of the millennium and a novella set in Golden Age Hollywood, exploring the chance encounters and decisions that shape our lives.",
-    isbn: "9780593296370"
-  },
-  {
-    title: "The Women",
-    author: "Kristin Hannah",
-    genre: "Historical Fiction",
-    coverId: "14013442",
-    description: "A deeply moving tribute to the army nurses who served in the Vietnam War, exploring the patriotism, trauma, and resilience of the women who volunteered to save lives in a war-torn country.",
-    isbn: "9781250178633"
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    genre: "Non-Fiction",
-    coverId: "10565261",
-    description: "No matter your goals, Atomic Habits offers a proven framework for improving every day. Learn practical strategies to build good habits, break bad ones, and master the tiny behaviors that lead to remarkable results.",
-    isbn: "9780735211292"
-  },
-  {
-    title: "The Creative Act: A Way of Being",
-    author: "Rick Rubin",
-    genre: "Non-Fiction",
-    coverId: "13426117",
-    description: "A legendary music producer shares his wisdom on the creative process, offering a beautiful, philosophical guide to accessing our innate creativity and finding art in the everyday moments of life.",
-    isbn: "9780593652886"
-  },
-  {
-    title: "Bookshops & Bonedust",
-    author: "Travis Baldree",
-    genre: "Fantasy",
-    coverId: "13838150",
-    description: "In this heartwarming prequel to Legends & Lattes, an injured young Viv is forced to spend her recovery in a sleepy seaside town, where she stumbles into a struggling bookstore and its colorful owner.",
-    isbn: "9781250881588"
-  },
-  {
-    title: "The Wager",
-    author: "David Grann",
-    genre: "History",
-    coverId: "13433550",
-    description: "A thrilling, true story of shipwreck, mutiny, and survival in the 18th century, charting the harrowing journey of a British vessel lost on a desolate island off Cape Horn.",
-    isbn: "9780385534260"
-  },
-  {
-    title: "The Anxious Generation",
-    author: "Jonathan Haidt",
-    genre: "Non-Fiction",
-    coverId: "14123514",
-    description: "An investigation into how the transition from a 'play-based childhood' to a 'phone-based childhood' has contributed to the epidemic of mental illness among teenagers, and what parents and schools can do.",
-    isbn: "9780593655030"
-  },
-  {
-    title: "James",
-    author: "Percival Everett",
-    genre: "Fiction",
-    coverId: "14123518",
-    description: "A brilliant, subversive reimagining of Adventures of Huckleberry Finn, told from the perspective of the enslaved Jim. Rich with humor, danger, and philosophical depth.",
-    isbn: "9780385550369"
-  },
-  {
-    title: "You Are Here",
-    author: "David Nicholls",
-    genre: "Romance",
-    coverId: "14299839",
-    description: "A warm, witty, and moving love story about two lonely people who find themselves embarking on a long-distance walking journey across the gorgeous, rain-swept English countryside.",
-    isbn: "9780063353596"
-  },
-  {
-    title: "Onyx Storm",
-    author: "Rebecca Yarros",
-    genre: "Fantasy",
-    coverId: "14389129",
-    description: "The thrilling continuation of the Empyrean series. Violet Sorrengail must prepare for an all-out war as the dark forces gather on the borders of Navarre, risking everything she loves.",
-    isbn: "9781649374189"
-  },
-  {
-    title: "The Wind Knows My Name",
-    author: "Isabel Allende",
-    genre: "Historical Fiction",
-    coverId: "13565129",
-    description: "This powerful novel weaves together the stories of a young boy escaping Nazi-occupied Europe and a girl fleeing violence in El Salvador, exploring the sacrifices parents make and the endurance of love.",
-    isbn: "9780593598108"
-  },
-  {
-    title: "Clear Thinking",
-    author: "Shane Parrish",
-    genre: "Non-Fiction",
-    coverId: "13912150",
-    description: "The creator of Farnam Street gives you the tools to recognize and overcome your cognitive biases, think clearly under pressure, and make smarter, more deliberate decisions in work and life.",
-    isbn: "9780593545195"
-  },
-  {
-    title: "The Heaven & Earth Grocery Store",
-    author: "James McBride",
-    genre: "Fiction",
-    coverId: "13636512",
-    description: "In a small, diverse neighborhood in Pottstown, Pennsylvania in the 1920s and 30s, the discovery of a skeleton at the bottom of a well reveals secrets long kept by Jewish and Black residents.",
-    isbn: "9780593422946"
-  },
-  {
-    title: "The Ocean at the End of the Lane",
-    author: "Neil Gaiman",
-    genre: "Fantasy",
-    coverId: "8281512",
-    description: "A man returns to his childhood home and remembers the magical, terrifying events of his youth, when a family living down the lane protected him from dark, ancient forces.",
-    isbn: "9780062255655"
-  },
-  {
-    title: "Sapiens: A Brief History of Humankind",
-    author: "Yuval Noah Harari",
-    genre: "History",
-    coverId: "9283151",
-    description: "A fascinating sweep through the history of human evolution, examining how biology, culture, and cognitive revolutions have shaped human societies and our relationship with the planet.",
-    isbn: "9780062316097"
-  },
-  {
-    title: "All the Light We Cannot See",
-    author: "Anthony Doerr",
-    genre: "Historical Fiction",
-    coverId: "8185521",
-    description: "A stunningly beautiful Pulitzer Prize-winning novel about a blind French girl and a young German soldier whose paths collide in occupied France during the devastating final days of World War II.",
-    isbn: "9781476746586"
-  },
-  {
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
-    genre: "Fantasy",
-    coverId: "8355215",
-    description: "Bilbo Baggins, a quiet and home-loving hobbit, is swept into a dangerous quest by the wizard Gandalf and a company of dwarves to reclaim their treasure from the fierce dragon Smaug.",
-    isbn: "9780345339683"
-  },
-  {
-    title: "A Deal with the Elf King",
-    author: "Elise Kova",
-    genre: "Romantasy",
-    description: "A cozy, standalone romantic fantasy inspired by Beauty and the Beast and Hades and Persephone. Luella is an herbologist chosen to marry the Elf King to maintain the peace.",
-    isbn: "9781949694284"
-  },
-  {
-    title: "Air Awakens",
-    author: "Elise Kova",
-    genre: "Romantasy",
-    description: "A library apprentice with sleeping magical powers is caught between a dangerous war, a mysterious crown prince, and the awakening of her wind magic.",
-    isbn: "9781932549935"
-  },
-  {
-    title: "A Court of Thorns and Roses",
-    author: "Sarah J. Maas",
-    genre: "Romantasy",
-    description: "Feyre is dragged to a magical land of faeries by a mysterious beast-like lord, discovering a romance that could save his dying realm.",
-    isbn: "9781619635180"
-  },
-  {
-    title: "From Blood and Ash",
-    author: "Jennifer L. Armentrout",
-    genre: "Romantasy",
-    description: "A Maiden chosen from birth to usher in a new era is guarded by a handsome commander, leading her to question her duty and her desires.",
-    isbn: "9781952446108"
-  },
-  {
-    title: "The Serpent and the Wings of Night",
-    author: "Carissa Broadbent",
-    genre: "Romantasy",
-    description: "In a world ruled by vampires, an adopted human girl enters a deadly tournament of the gods to win her freedom, allying with a charming rival.",
-    isbn: "9781250343024"
-  },
-  {
-    title: "The Bridge Kingdom",
-    author: "Danielle L. Jensen",
-    genre: "Romantasy",
-    description: "A warrior princess trained to infiltrate a legendary bridge kingdom marries its king, planning to destroy it but fighting her growing love for him.",
-    isbn: "9781775338901"
-  }
+const TARGET_AUTHORS = [
+  { name: "Elise Kova", genre: "Romantasy" },
+  { name: "Sarah J. Maas", genre: "Romantasy" },
+  { name: "Rebecca Yarros", genre: "Romantasy" },
+  { name: "Jennifer L. Armentrout", genre: "Romantasy" },
+  { name: "Carissa Broadbent", genre: "Romantasy" },
+  { name: "Danielle L. Jensen", genre: "Romantasy" },
+  { name: "Rebecca Ross", genre: "Romantasy" },
+  { name: "Tracy Wolff", genre: "Romantasy" },
+  { name: "Hannah Nicole Maehrer", genre: "Romantasy" },
+  { name: "Leigh Bardugo", genre: "Fantasy" },
+  { name: "Travis Baldree", genre: "Fantasy" },
+  { name: "Neil Gaiman", genre: "Fantasy" },
+  { name: "Emily Henry", genre: "Romance" },
+  { name: "Kristin Hannah", genre: "Historical Fiction" },
+  { name: "James Clear", genre: "Non-Fiction" },
+  { name: "Amor Towles", genre: "Fiction" },
+  { name: "David Grann", genre: "History" }
+];
+
+// Fallback books data in case Google Books API fails or throttles
+const FALLBACK_BOOKS = [
+  { title: "A Deal with the Elf King", author: "Elise Kova", genre: "Romantasy", isbn: "9781949694284", description: "A cozy, standalone romantic fantasy inspired by Beauty and the Beast and Hades and Persephone. Luella is an herbologist chosen to marry the Elf King to maintain the peace." },
+  { title: "Air Awakens", author: "Elise Kova", genre: "Romantasy", isbn: "9781932549935", description: "A library apprentice with sleeping magical powers is caught between a dangerous war, a mysterious crown prince, and the awakening of her wind magic." },
+  { title: "A Court of Thorns and Roses", author: "Sarah J. Maas", genre: "Romantasy", isbn: "9781619635180", description: "Feyre is dragged to a magical land of faeries by a mysterious beast-like lord, discovering a romance that could save his dying realm." },
+  { title: "Iron Flame", author: "Rebecca Yarros", genre: "Romantasy", isbn: "9781649374172", description: "Violet Sorrengail must survive the brutal dragon-rider training while hiding secrets that could destroy her homeland." },
+  { title: "Onyx Storm", author: "Rebecca Yarros", genre: "Romantasy", isbn: "9781649374189", description: "The thrilling continuation of the dragon rider Empyrean series, filled with war, romance, and sacrifices." },
+  { title: "From Blood and Ash", author: "Jennifer L. Armentrout", genre: "Romantasy", isbn: "9781952446108", description: "A Maiden chosen from birth to usher in a new era is guarded by a handsome commander, leading her to question her duty." },
+  { title: "The Serpent and the Wings of Night", author: "Carissa Broadbent", genre: "Romantasy", isbn: "9781250343024", description: "In a world ruled by vampires, an adopted human girl enters a deadly tournament to win her freedom, allying with a charming rival." },
+  { title: "The Bridge Kingdom", author: "Danielle L. Jensen", genre: "Romantasy", isbn: "9781775338901", description: "A warrior princess trained to infiltrate a legendary bridge kingdom marries its king, planning to destroy it but fighting her growing love for him." },
+  { title: "Divine Rivals", author: "Rebecca Ross", genre: "Romantasy", isbn: "9781250874580", description: "Two rival journalists find love and magic connection through typing letters during a brutal war of the gods." },
+  { title: "Crave", author: "Tracy Wolff", genre: "Romantasy", isbn: "9781640636118", description: "A human girl is sent to a boarding school in Alaska, only to discover it is populated by vampires, witches, and shape-shifters." },
+  { title: "Assistant to the Villain", author: "Hannah Nicole Maehrer", genre: "Romantasy", isbn: "9781649377135", description: "A whimsical, cozy romantic fantasy about an optimistic assistant who works for a notoriously grumpy and chaotic dark lord." },
+  { title: "The Familiar", author: "Leigh Bardugo", genre: "Fantasy", isbn: "9781250333858", description: "In the Spanish Golden Age, a kitchen maid with secret magical talents finds herself caught in a game of ambition and romance." },
+  { title: "Bookshops & Bonedust", author: "Travis Baldree", genre: "Fantasy", isbn: "9781250881588", description: "In this heartwarming prequel, an injured young Viv is forced to spend her recovery in a seaside town, stumbling into a struggling bookstore." },
+  { title: "The Hobbit", author: "J.R.R. Tolkien", genre: "Fantasy", isbn: "9780345339683", description: "Bilbo Baggins, a quiet hobbit, is swept into a dangerous quest by Gandalf to reclaim a treasure from the dragon Smaug." },
+  { title: "Funny Story", author: "Emily Henry", genre: "Romance", isbn: "9780593441282", description: "Daphne finds herself stranded in a beautiful Michigan town sharing a roof with her ex-fiance's partner's ex, Miles." },
+  { title: "The Women", author: "Kristin Hannah", genre: "Historical Fiction", isbn: "9781250178633", description: "A deeply moving tribute to the army nurses who served in the Vietnam War, exploring patriotism, trauma, and resilience." },
+  { title: "Atomic Habits", author: "James Clear", genre: "Non-Fiction", isbn: "9780735211292", description: "Atomic Habits offers a proven framework for improving every day, teaching how to build good habits and break bad ones." },
+  { title: "Table for Two", author: "Amor Towles", genre: "Fiction", isbn: "9780593296370", description: "A collection of six stories set in New York City and a novella set in Golden Age Hollywood, exploring chance encounters." },
+  { title: "The Wager", author: "David Grann", genre: "History", isbn: "9780385534260", description: "A true story of shipwreck, mutiny, and survival in the 18th century, charting a British vessel lost on a desolate island." }
 ];
 
 const EVENT_TYPES = [
@@ -261,83 +103,114 @@ const EVENT_TYPES = [
   { name: "Writing Workshop", color: "#14b8a6", icon: "fa-pencil" } // Teal
 ];
 
-function generateEvents() {
+// Helper to query Google Books API
+async function fetchBooksFromAPI(authorInfo) {
+  const query = encodeURIComponent(`inauthor:"${authorInfo.name}"`);
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=3`;
+  
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    const data = await res.json();
+    
+    const books = [];
+    if (data.items) {
+      for (const item of data.items) {
+        const info = item.volumeInfo || {};
+        const identifiers = info.industryIdentifiers || [];
+        const isbnObj = identifiers.find(id => id.type === 'ISBN_13') || identifiers[0];
+        
+        if (isbnObj) {
+          books.push({
+            title: info.title,
+            author: info.authors ? info.authors[0] : authorInfo.name,
+            genre: authorInfo.genre,
+            isbn: isbnObj.identifier,
+            description: info.description ? info.description.substring(0, 240) + '...' : `Signings and discussion for ${info.title} by ${authorInfo.name}.`
+          });
+        }
+      }
+    }
+    return books;
+  } catch (err) {
+    console.warn(`Failed to fetch books for ${authorInfo.name} from Google Books: ${err.message}`);
+    return [];
+  }
+}
+
+function generateEvents(booksList) {
   const events = [];
   let eventId = 1;
 
-  // Let's create about 120-150 events distributed across bookstores and authors over 90 days.
+  // Let's create about 120 events distributed across venues and authors over 90 days.
   for (let i = 0; i < 90; i++) {
-    // Determine how many events happen on this day (0 to 3 events)
-    // Weekends (Friday, Saturday, Sunday) get more events
     const date = new Date(START_DATE.getTime() + i * 24 * 60 * 60 * 1000);
-    const dayOfWeek = date.getDay(); // 0 is Sunday, 6 is Saturday
+    const dayOfWeek = date.getDay();
     let eventCount = 1;
     if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) {
       eventCount = Math.floor(Math.random() * 3) + 1; // 1 to 3
     } else {
-      eventCount = Math.random() < 0.4 ? 1 : 0; // 40% chance of 1 event on weekdays
+      eventCount = Math.random() < 0.4 ? 1 : 0; // 40% on weekdays
     }
 
     for (let e = 0; e < eventCount; e++) {
-      // Pick a random bookstore
-      const bookstore = BOOKSTORES[Math.floor(Math.random() * BOOKSTORES.length)];
-      
-      // Pick a random book
-      const book = CURATED_BOOKS[Math.floor(Math.random() * CURATED_BOOKS.length)];
+      const venue = VENUES[Math.floor(Math.random() * VENUES.length)];
+      const book = booksList[Math.floor(Math.random() * booksList.length)];
 
-      // Pick an event type compatible with the book genre
       let eventType = EVENT_TYPES[0]; // Author Signing
       if (book.genre === "Non-Fiction" || book.genre === "History") {
         const roll = Math.random();
-        if (roll < 0.4) eventType = EVENT_TYPES[0]; // Author Signing
-        else if (roll < 0.7) eventType = EVENT_TYPES[2]; // Book Club
-        else eventType = EVENT_TYPES[5]; // Writing Workshop
-      } else if (book.title === "The Hobbit" || book.genre === "Fantasy") {
+        if (roll < 0.4) eventType = EVENT_TYPES[0];
+        else if (roll < 0.7) eventType = EVENT_TYPES[2];
+        else eventType = EVENT_TYPES[5];
+      } else if (book.title === "The Hobbit" || book.genre === "Fantasy" || book.genre === "Romantasy") {
         const roll = Math.random();
         if (roll < 0.5) eventType = EVENT_TYPES[2]; // Book Club
-        else if (roll < 0.8) eventType = EVENT_TYPES[0]; // Author Signing
-        else eventType = EVENT_TYPES[4]; // Storytime (for fantasy fans/families)
-      } else if (Math.random() < 0.2) {
-        eventType = EVENT_TYPES[3]; // Poetry Reading
+        else if (roll < 0.8) eventType = EVENT_TYPES[0]; // Signing
+        else eventType = EVENT_TYPES[4]; // Storytime/Panel
       } else {
         const roll = Math.random();
-        if (roll < 0.4) eventType = EVENT_TYPES[0]; // Author Signing
-        else if (roll < 0.7) eventType = EVENT_TYPES[1]; // Book Launch
-        else eventType = EVENT_TYPES[2]; // Book Club
+        if (roll < 0.4) eventType = EVENT_TYPES[0];
+        else if (roll < 0.7) eventType = EVENT_TYPES[1];
+        else eventType = EVENT_TYPES[2];
       }
 
-      // Format time (mostly evening events, say between 5:00 PM and 8:00 PM)
-      const startHour = 17 + Math.floor(Math.random() * 4); // 17, 18, 19, 20
+      const startHour = 17 + Math.floor(Math.random() * 4); // 5 PM to 8 PM
       const startMinute = Math.random() < 0.5 ? 0 : 30;
       
       const eventDate = new Date(date);
       eventDate.setHours(startHour, startMinute, 0, 0);
 
-      // Create a descriptions/titles based on event types
       let eventTitle = "";
       let eventDesc = "";
       
       if (eventType.name === "Author Signing") {
         eventTitle = `Author Signing: ${book.author}`;
-        eventDesc = `Join us at ${bookbookstoreName(bookstore.name)} for an exclusive book signing event with the bestselling author ${book.author}, celebrating their work, including "${book.title}". Copies of the book will be available for purchase, and the author will sign personal copies. Q&A session to precede signing.`;
+        eventDesc = `Join us at ${bookbookstoreName(venue.name)} for an exclusive book signing event with romantasy/featured author ${book.author}, celebrating their work, including "${book.title}". Copies of the book will be available for purchase, and the author will sign copies. Q&A session to precede signing.`;
       } else if (eventType.name === "Book Launch") {
         eventTitle = `Book Launch: ${book.title}`;
-        eventDesc = `Celebrate the official launch of "${book.title}" by ${book.author} at ${bookbookstoreName(bookstore.name)}! Hear the author read select passages, enjoy refreshments, and engage in a lively discussion about the book's themes. Signed copies available.`;
+        eventDesc = `Celebrate the official launch of "${book.title}" by ${book.author} at ${bookbookstoreName(venue.name)}! Hear the author read select passages, enjoy refreshments, and engage in a lively discussion about the book's themes. Signed copies available.`;
       } else if (eventType.name === "Book Club") {
         eventTitle = `Book Discussion: ${book.title}`;
-        eventDesc = `Our monthly community book club will gather to discuss "${book.title}" by ${book.author}. Share your thoughts, analyze the plot, and connect with fellow readers in a cozy, relaxed setting at ${bookbookstoreName(bookstore.name)}. Refreshments served.`;
+        eventDesc = `Our monthly community book club will gather to discuss "${book.title}" by ${book.author}. Share your thoughts, analyze the plot, and connect with fellow readers in a cozy, relaxed setting at ${bookbookstoreName(venue.name)}. Refreshments served.`;
       } else if (eventType.name === "Poetry Reading") {
         eventTitle = `Literary & Poetry Salon`;
-        eventDesc = `An evening of lyrical prose and poetry inspired by the themes of "${book.title}" and contemporary literature. Local poets and guest reader ${book.author} will share their works. Open mic to follow. Hosted by ${bookbookstoreName(bookstore.name)}.`;
+        eventDesc = `An evening of lyrical prose and poetry inspired by the themes of "${book.title}" and contemporary literature. Guest reader ${book.author} will share their works. Open mic to follow. Hosted by ${bookbookstoreName(venue.name)}.`;
       } else if (eventType.name === "Storytime") {
         eventTitle = `Family Storytime: "${book.title}"`;
-        eventDesc = `Bring the kids for an engaging afternoon of reading, crafts, and interactive storytelling featuring "${book.title}" by ${book.author}. Perfect for readers of all ages. Hosted at ${bookbookstoreName(bookstore.name)}.`;
+        eventDesc = `Bring the family for an engaging afternoon of reading, crafts, and interactive storytelling featuring "${book.title}" by ${book.author}. Perfect for readers of all ages. Hosted at ${bookbookstoreName(venue.name)}.`;
       } else {
         eventTitle = `Creative Writing Workshop with ${book.author}`;
         eventDesc = `Unlock your writing potential in this interactive workshop led by acclaimed author ${book.author}. Inspired by the techniques used in "${book.title}", we will explore character development, world-building, and pacing. Limited seats available, reservation recommended.`;
       }
 
-      let eventWebsite = generateEventWebsite(bookstore, book);
+      // If it's a comic con or convention, customize details
+      if (venue.name.includes("Comic-Con") || venue.name.includes("Con")) {
+        eventTitle = `Special Panel: ${book.author}`;
+        eventDesc = `Catch bestselling author ${book.author} on panel at ${venue.name}! Discussing "${book.title}", fantasy world-building, writing tips, and taking attendee questions. Signing slot to follow at the booth. Ticket admission required.`;
+      }
+
+      let eventWebsite = generateEventWebsite(venue, book);
 
       events.push({
         id: eventId++,
@@ -346,25 +219,24 @@ function generateEvents() {
         author: book.author,
         genre: book.genre,
         isbn: book.isbn,
-        coverUrl: book.coverId ? `https://covers.openlibrary.org/b/id/${book.coverId}-L.jpg` : `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg`,
+        coverUrl: `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg`,
         eventType: eventType.name,
         eventColor: eventType.color,
         eventIcon: eventType.icon,
         date: eventDate.toISOString(),
         description: eventDesc,
-        venue: bookstore.name,
-        address: bookstore.address,
-        city: bookstore.city,
-        state: bookstore.state,
-        zip: bookstore.zip,
-        lat: bookstore.lat,
-        lon: bookstore.lon,
+        venue: venue.name,
+        address: venue.address,
+        city: venue.city,
+        state: venue.state,
+        zip: venue.zip,
+        lat: venue.lat,
+        lon: venue.lon,
         website: eventWebsite
       });
     }
   }
 
-  // Sort by date
   events.sort((a, b) => new Date(a.date) - new Date(b.date));
   return events;
 }
@@ -408,13 +280,46 @@ function generateEventWebsite(bookstore, book) {
     return `https://www.eventbrite.com/d/united-states/${encodeURIComponent(book.author + ' book signing')}/`;
   }
   
-  // Direct store search query fallback
   return `${bookstore.website}/search/site/${encodedQuery}`;
 }
 
 async function run() {
-  console.log("Generating static book event database...");
-  const events = generateEvents();
+  console.log("Compiling Book Bound Event Finder database...");
+  
+  let fetchedBooks = [];
+  
+  // Attempt to fetch books dynamically for all target authors from Google Books API
+  console.log(`Querying Google Books API for ${TARGET_AUTHORS.length} authors...`);
+  for (const author of TARGET_AUTHORS) {
+    const books = await fetchBooksFromAPI(author);
+    if (books && books.length > 0) {
+      fetchedBooks.push(...books);
+    }
+    // Tiny throttle to avoid rate limiting
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }
+  
+  let finalBooks = [];
+  if (fetchedBooks.length > 0) {
+    console.log(`Successfully fetched ${fetchedBooks.length} books from Google Books!`);
+    finalBooks = fetchedBooks;
+  } else {
+    console.log("No books fetched or network error. Using high-quality curated fallbacks.");
+    finalBooks = FALLBACK_BOOKS;
+  }
+  
+  // Clean duplicates
+  const seenIsbns = new Set();
+  const uniqueBooks = [];
+  for (const book of finalBooks) {
+    if (!seenIsbns.has(book.isbn)) {
+      seenIsbns.add(book.isbn);
+      uniqueBooks.push(book);
+    }
+  }
+
+  console.log(`Generating events schedule using ${uniqueBooks.length} distinct books...`);
+  const events = generateEvents(uniqueBooks);
   
   const docsDataDir = path.join(__dirname, '..', 'docs', 'data');
   if (!fs.existsSync(docsDataDir)) {
