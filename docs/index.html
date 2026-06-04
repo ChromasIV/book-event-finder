@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0.4">
+  <link rel="stylesheet" href="style.css?v=1.0.5">
   
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -84,6 +84,10 @@
           <div class="slider-container">
             <input type="range" id="radius-input" min="10" max="500" step="5" value="100">
             <span class="slider-value" id="radius-val">100 miles</span>
+          </div>
+          <div class="checkbox-container">
+            <input type="checkbox" id="ignore-distance" name="ignore-distance">
+            <label for="ignore-distance" class="checkbox-label">Show all events (Ignore distance)</label>
           </div>
           <span class="helper-text">Find events within this distance from base location</span>
         </div>
@@ -187,7 +191,7 @@
   <footer>
     <div class="container footer-content">
       <p>© 2026 BookBound Finder. Built with elegant glassmorphism for book enthusiasts.</p>
-      <p class="footer-stats">Powered by local bookstore feeds & Open Library. Theme Version: 1.0.4</p>
+      <p class="footer-stats">Powered by local bookstore feeds & Open Library. Theme Version: 1.0.5</p>
     </div>
   </footer>
 

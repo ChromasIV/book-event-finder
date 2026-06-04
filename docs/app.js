@@ -46,7 +46,8 @@ const elements = {
   btnLoadMore: document.getElementById('btn-load-more'),
   btnResetFilters: document.getElementById('btn-reset-filters'),
   btnClearFilters: document.getElementById('btn-clear-filters'),
-  filterAuthor: document.getElementById('filter-author')
+  filterAuthor: document.getElementById('filter-author'),
+  ignoreDistance: document.getElementById('ignore-distance')
 };
 
 // --- GEOLOCATION & DISTANCE ---
@@ -135,6 +136,7 @@ function applyFiltersAndRender() {
   const end = endVal ? new Date(endVal + 'T23:59:59') : new Date(8640000000000000);
   const query = elements.searchText.value.toLowerCase().trim();
   const selectedAuthor = elements.filterAuthor ? elements.filterAuthor.value : 'all';
+  const ignoreDist = elements.ignoreDistance ? elements.ignoreDistance.checked : false;
 
   // 1. Filter events list
   filteredEvents = events.filter(evt => {
@@ -150,7 +152,7 @@ function applyFiltersAndRender() {
 
     // Distance check
     evt.distance = haversineDistance(userLocation.lat, userLocation.lon, evt.lat, evt.lon);
-    if (evt.distance !== null && evt.distance > radius) {
+    if (!ignoreDist && evt.distance !== null && evt.distance > radius) {
       return false;
     }
 
@@ -406,6 +408,13 @@ function init() {
     if (elements.filterAuthor) {
       elements.filterAuthor.value = 'all';
     }
+    if (elements.ignoreDistance) {
+      elements.ignoreDistance.checked = false;
+    }
+    if (elements.radiusInput) {
+      elements.radiusInput.disabled = false;
+      elements.radiusInput.style.opacity = '1';
+    }
     
     // Select NYC by default
     elements.presetCity.value = '40.7128,-74.0060';
@@ -434,7 +443,19 @@ function init() {
     });
   }
 
-  // 13. Load events dataset
+  // 13. Ignore Distance Checkbox listener
+  if (elements.ignoreDistance) {
+    elements.ignoreDistance.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      if (elements.radiusInput) {
+        elements.radiusInput.disabled = isChecked;
+        elements.radiusInput.style.opacity = isChecked ? '0.4' : '1';
+      }
+      applyFiltersAndRender();
+    });
+  }
+
+  // 14. Load events dataset
   fetchEventsData();
 }
 

@@ -1,4 +1,4 @@
-/* Theme Version: 1.0.4 */
+/* Theme Version: 1.0.5 */
 :root {
   --bg-main: #060913;
   --bg-card: rgba(13, 19, 36, 0.7);
@@ -1049,4 +1049,33 @@ footer {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-family: var(--font-family-heading) !important;
+  font-size: 0.8rem !important;
+  color: var(--text-muted) !important;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 400 !important;
+  display: inline-block;
+  margin: 0;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkbox-label {
+  color: var(--primary) !important;
 }
