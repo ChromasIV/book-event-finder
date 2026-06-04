@@ -337,14 +337,7 @@ function generateEvents() {
         eventDesc = `Unlock your writing potential in this interactive workshop led by acclaimed author ${book.author}. Inspired by the techniques used in "${book.title}", we will explore character development, world-building, and pacing. Limited seats available, reservation recommended.`;
       }
 
-      let eventWebsite = bookstore.website;
-      if (book.author === "Elise Kova" && Math.random() < 0.6) {
-        eventWebsite = "https://www.elisekova.com/events/";
-      } else if (bookstore.name.includes("Fabled") && Math.random() < 0.7) {
-        eventWebsite = "https://fabledfantasyevents.com";
-      } else if (Math.random() < 0.35) {
-        eventWebsite = `https://www.eventbrite.com/d/united-states/books--events/`;
-      }
+      let eventWebsite = generateEventWebsite(bookstore, book);
 
       events.push({
         id: eventId++,
@@ -378,6 +371,45 @@ function generateEvents() {
 
 function bookbookstoreName(name) {
   return name.endsWith("Bookstore") || name.endsWith("Booksellers") || name.endsWith("Company") || name.endsWith("Store") || name.endsWith("Books") || name.includes("Noble") || name.includes("Million") || name.includes("Con") || name.includes("Events") ? name : `${name} Bookstore`;
+}
+
+function generateEventWebsite(bookstore, book) {
+  const query = `${book.author} ${book.title}`;
+  const encodedQuery = encodeURIComponent(query);
+  const name = bookstore.name;
+  
+  if (book.author === "Elise Kova" && Math.random() < 0.7) {
+    return "https://www.elisekova.com/events/";
+  }
+  if (name.includes("Fabled")) {
+    return "https://fabledfantasyevents.com";
+  }
+  if (name.includes("Barnes & Noble")) {
+    return `https://www.barnesandnoble.com/s/${encodedQuery}`;
+  }
+  if (name.includes("Books-A-Million")) {
+    return `https://www.booksamillion.com/search?query=${encodedQuery}`;
+  }
+  if (name.includes("Strand")) {
+    return `https://www.strandbooks.com/search?query=${encodedQuery}`;
+  }
+  if (name.includes("Powell's")) {
+    return `https://www.powells.com/searchresults?keyword=${encodedQuery}`;
+  }
+  if (name.includes("Third Place")) {
+    return `https://www.thirdplacebooks.com/search/site/${encodedQuery}`;
+  }
+  if (name.includes("Comic-Con") || name.includes("Con")) {
+    return `${bookstore.website}/search?q=${encodeURIComponent(book.author)}`;
+  }
+  
+  // Eventbrite fallback
+  if (Math.random() < 0.4) {
+    return `https://www.eventbrite.com/d/united-states/${encodeURIComponent(book.author + ' book signing')}/`;
+  }
+  
+  // Direct store search query fallback
+  return `${bookstore.website}/search/site/${encodedQuery}`;
 }
 
 async function run() {
