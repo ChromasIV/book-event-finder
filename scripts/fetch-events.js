@@ -254,7 +254,7 @@ function generateEventWebsite(bookstore, book) {
     return "https://www.elisekova.com/events/";
   }
   if (name.includes("Fabled")) {
-    return "https://fabledfantasyevents.com";
+    return `https://www.google.com/search?q=site:fabledfantasyevents.com+${encodeURIComponent(book.author)}`;
   }
   if (name.includes("Barnes & Noble")) {
     return `https://www.barnesandnoble.com/s/${encodedQuery}`;
@@ -272,7 +272,8 @@ function generateEventWebsite(bookstore, book) {
     return `https://www.thirdplacebooks.com/search/site/${encodedQuery}`;
   }
   if (name.includes("Comic-Con") || name.includes("Con")) {
-    return `${bookstore.website}/search?q=${encodeURIComponent(book.author)}`;
+    const domain = bookstore.website.replace(/https?:\/\/(www\.)?/, '');
+    return `https://www.google.com/search?q=site:${domain}+${encodeURIComponent(book.author + ' ' + book.title)}`;
   }
   
   // Eventbrite fallback
