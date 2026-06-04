@@ -1,0 +1,20 @@
+{
+  "name": "book-event-finder",
+  "version": "1.0.0",
+  "description": "Dynamic book event finder by location, radius, dates, and categories.",
+  "main": "scripts/fetch-events.js",
+  "scripts": {
+    "fetch-data": "node scripts/fetch-events.js",
+    "start": "npx http-server docs -p 8080"
+  },
+  "keywords": [
+    "books",
+    "events",
+    "signings",
+    "bookstores",
+    "geolocation",
+    "haversine"
+  ],
+  "author": "",
+  "license": "ISC"
+}

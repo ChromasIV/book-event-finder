@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Event Finder - Discover Local Author Signings, Launches, & Book Clubs</title>
+  <meta name="description" content="Find upcoming book events, author signings, book clubs, poetry readings, and writing workshops near you. Filter by distance, location, dates, and genre.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=1.0.0">
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Ambient background glow effects -->
+  <div class="glow-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fa-solid fa-book-open logo-icon"></i>
+        <h1>BookBound</h1>
+      </div>
+      <p class="subtitle">Discover author signings, book launches, poetry readings, and book clubs near you.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Search & Filter Controls -->
+    <section class="controls-panel card">
+      <div class="panel-header">
+        <h2 class="panel-title"><i class="fa-solid fa-sliders"></i> Filter Book Events</h2>
+        <button id="btn-reset-filters" class="btn btn-text"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+      </div>
+      
+      <div class="controls-grid">
+        <!-- Location Column -->
+        <div class="control-group">
+          <label><i class="fa-solid fa-location-dot"></i> Base Location</label>
+          <div class="location-presets">
+            <select id="preset-city" aria-label="Select Preset City">
+              <option value="current">📍 Current Location</option>
+              <option value="40.7128,-74.0060">New York, NY</option>
+              <option value="34.0522,-118.2437">Los Angeles, CA</option>
+              <option value="41.8781,-87.6298">Chicago, IL</option>
+              <option value="42.3601,-71.0589">Boston, MA</option>
+              <option value="33.7490,-84.3880">Atlanta, GA</option>
+              <option value="37.7749,-122.4194">San Francisco, CA</option>
+              <option value="47.6062,-122.3321">Seattle, WA</option>
+              <option value="39.7392,-104.9903">Denver, CO</option>
+              <option value="45.5230,-122.6814">Portland, OR</option>
+              <option value="25.7617,-80.1918">Miami, FL</option>
+            </select>
+            <button id="btn-geolocation" class="btn btn-secondary" title="Use Browser Location">
+              <i class="fa-solid fa-location-crosshairs"></i>
+            </button>
+          </div>
+          <div class="lat-lon-inputs">
+            <div>
+              <span class="coord-label">Lat:</span>
+              <input type="number" id="lat-input" step="0.0001" placeholder="Latitude" value="40.7128">
+            </div>
+            <div>
+              <span class="coord-label">Lon:</span>
+              <input type="number" id="lon-input" step="0.0001" placeholder="Longitude" value="-74.0060">
+            </div>
+          </div>
+          <span id="location-status" class="status-indicator">Detecting location...</span>
+        </div>
+
+        <!-- Radius Column -->
+        <div class="control-group">
+          <label for="radius-input"><i class="fa-solid fa-circle-notch"></i> Search Radius</label>
+          <div class="slider-container">
+            <input type="range" id="radius-input" min="10" max="500" step="5" value="100">
+            <span class="slider-value" id="radius-val">100 miles</span>
+          </div>
+          <span class="helper-text">Find events within this distance from base location</span>
+        </div>
+
+        <!-- Date Column -->
+        <div class="control-group">
+          <label><i class="fa-solid fa-calendar-days"></i> Dates (June 2026 & Later)</label>
+          <div class="date-inputs">
+            <div>
+              <span class="date-label">From:</span>
+              <input type="date" id="start-date" aria-label="Start Date">
+            </div>
+            <div>
+              <span class="date-label">To:</span>
+              <input type="date" id="end-date" aria-label="End Date">
+            </div>
+          </div>
+          <span class="helper-text">Events between selected dates</span>
+        </div>
+
+        <!-- Search Text Column -->
+        <div class="control-group">
+          <label for="search-text"><i class="fa-solid fa-magnifying-glass"></i> Book, Author, or Venue</label>
+          <div class="search-input-wrapper">
+            <input type="text" id="search-text" placeholder="Search Strand, Henry, Fantasy...">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+          <span class="helper-text">Filter by title, author, bookstore, city, state, or genre</span>
+        </div>
+      </div>
+
+      <!-- Event Types Filter Row -->
+      <div class="event-types-row">
+        <label><i class="fa-solid fa-tags"></i> Event Types</label>
+        <div class="event-types-badges">
+          <button class="badge-toggle active" data-type="Author Signing"><i class="fa-solid fa-pen-nib"></i> Signings</button>
+          <button class="badge-toggle active" data-type="Book Launch"><i class="fa-solid fa-rocket"></i> Launches</button>
+          <button class="badge-toggle active" data-type="Book Club"><i class="fa-solid fa-comments"></i> Book Clubs</button>
+          <button class="badge-toggle active" data-type="Poetry Reading"><i class="fa-solid fa-feather-pointed"></i> Poetry</button>
+          <button class="badge-toggle active" data-type="Storytime"><i class="fa-solid fa-child"></i> Storytime</button>
+          <button class="badge-toggle active" data-type="Writing Workshop"><i class="fa-solid fa-pencil"></i> Workshops</button>
+        </div>
+      </div>
+      
+      <!-- Sort Controls -->
+      <div class="sort-row">
+        <span class="sort-label">Sort by:</span>
+        <div class="sort-buttons">
+          <button id="sort-date" class="sort-btn active"><i class="fa-solid fa-calendar-day"></i> Date</button>
+          <button id="sort-distance" class="sort-btn"><i class="fa-solid fa-road"></i> Distance</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-container">
+      <div class="results-header">
+        <div id="results-count" class="results-count">Searching for book events...</div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading" class="loader-box">
+        <div class="book-spinner">
+          <div class="page page1"></div>
+          <div class="page page2"></div>
+          <div class="page page3"></div>
+        </div>
+        <p>Opening the library doors... Fetching book events...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-box hidden">
+        <i class="fa-solid fa-book-open-reader empty-icon"></i>
+        <h3>No Events Found</h3>
+        <p>No literary events match your search criteria. Try expanding your search radius or modifying your filters.</p>
+        <button id="btn-clear-filters" class="btn btn-primary">Reset All Filters</button>
+      </div>
+
+      <!-- Events Grid -->
+      <div id="events-grid" class="events-grid">
+        <!-- Event Cards will be dynamically inserted here -->
+      </div>
+
+      <!-- Load More -->
+      <div class="load-more-container">
+        <button id="btn-load-more" class="btn btn-primary hidden">Load More Events</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>© 2026 BookBound Finder. Built with elegant glassmorphism for book enthusiasts.</p>
+      <p class="footer-stats">Powered by local bookstore feeds & Open Library. Theme Version: 1.0.0</p>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
