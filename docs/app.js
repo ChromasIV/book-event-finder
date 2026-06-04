@@ -45,7 +45,8 @@ const elements = {
   eventsGrid: document.getElementById('events-grid'),
   btnLoadMore: document.getElementById('btn-load-more'),
   btnResetFilters: document.getElementById('btn-reset-filters'),
-  btnClearFilters: document.getElementById('btn-clear-filters')
+  btnClearFilters: document.getElementById('btn-clear-filters'),
+  filterAuthor: document.getElementById('filter-author')
 };
 
 // --- GEOLOCATION & DISTANCE ---
@@ -133,11 +134,15 @@ function applyFiltersAndRender() {
   const start = startVal ? new Date(startVal + 'T00:00:00') : new Date(-8640000000000000);
   const end = endVal ? new Date(endVal + 'T23:59:59') : new Date(8640000000000000);
   const query = elements.searchText.value.toLowerCase().trim();
+  const selectedAuthor = elements.filterAuthor ? elements.filterAuthor.value : 'all';
 
   // 1. Filter events list
   filteredEvents = events.filter(evt => {
     // Event type check
     if (!activeEventTypes.has(evt.eventType)) return false;
+
+    // Author filter check
+    if (selectedAuthor && selectedAuthor !== 'all' && evt.author !== selectedAuthor) return false;
 
     // Date range check
     const evtDate = new Date(evt.date);
@@ -398,6 +403,9 @@ function init() {
     elements.radiusInput.value = '100';
     elements.radiusVal.textContent = '100 miles';
     elements.searchText.value = '';
+    if (elements.filterAuthor) {
+      elements.filterAuthor.value = 'all';
+    }
     
     // Select NYC by default
     elements.presetCity.value = '40.7128,-74.0060';
@@ -419,7 +427,14 @@ function init() {
   elements.btnResetFilters.addEventListener('click', resetFilters);
   elements.btnClearFilters.addEventListener('click', resetFilters);
 
-  // 12. Load events dataset
+  // 12. Author Filter change listener
+  if (elements.filterAuthor) {
+    elements.filterAuthor.addEventListener('change', () => {
+      applyFiltersAndRender();
+    });
+  }
+
+  // 13. Load events dataset
   fetchEventsData();
 }
 
@@ -434,6 +449,7 @@ async function fetchEventsData() {
     }
     
     events = await response.json();
+    populateAuthorDropdown();
     
     // Simulate minor delay to appreciate the custom book-opening flip animation
     setTimeout(() => {
@@ -452,6 +468,23 @@ async function fetchEventsData() {
       </p>
     `;
   }
+}
+
+function populateAuthorDropdown() {
+  if (!elements.filterAuthor) return;
+  
+  // Extract unique authors
+  const uniqueAuthors = [...new Set(events.map(evt => evt.author))].sort();
+  
+  // Clear options except the first one ("All Authors")
+  elements.filterAuthor.innerHTML = '<option value="all">✍️ All Authors</option>';
+  
+  uniqueAuthors.forEach(author => {
+    const opt = document.createElement('option');
+    opt.value = author;
+    opt.textContent = author;
+    elements.filterAuthor.appendChild(opt);
+  });
 }
 
 // Kickstart application when DOM is ready

@@ -2,7 +2,7 @@
 
 A premium, interactive web application that helps book enthusiasts discover and search upcoming local literary events—including author signings, book clubs, book launches, poetry readings, and writing workshops. Filterable by coordinates, search radius, date ranges, and categories.
 
-**Theme Version:** 1.0.3  
+**Theme Version:** 1.0.4  
 **Status:** Complete & Ready for local or GitHub Pages execution!
 
 ---

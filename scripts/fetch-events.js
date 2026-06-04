@@ -36,7 +36,15 @@ const BOOKSTORES = [
   { id: "bn-glendale-denver", name: "Barnes & Noble", address: "960 S Colorado Blvd", city: "Denver", state: "CO", zip: "80246", lat: 39.7001, lon: -104.9406, website: "https://www.barnesandnoble.com" },
   { id: "bn-lloyd-portland", name: "Barnes & Noble", address: "1317 Lloyd Center", city: "Portland", state: "OR", zip: "97232", lat: 45.5321, lon: -122.6534, website: "https://www.barnesandnoble.com" },
   { id: "bam-kennesaw-atlanta", name: "Books-A-Million", address: "4400 Cobb Pkwy NW", city: "Kennesaw", state: "GA", zip: "30152", lat: 34.0242, lon: -84.6190, website: "https://www.booksamillion.com" },
-  { id: "bam-ftlauderdale-miami", name: "Books-A-Million", address: "1350 W Sunrise Blvd", city: "Fort Lauderdale", state: "FL", zip: "33311", lat: 26.1378, lon: -80.1601, website: "https://www.booksamillion.com" }
+  { id: "bam-ftlauderdale-miami", name: "Books-A-Million", address: "1350 W Sunrise Blvd", city: "Fort Lauderdale", state: "FL", zip: "33311", lat: 26.1378, lon: -80.1601, website: "https://www.booksamillion.com" },
+  { id: "fabled-la", name: "Fabled Fantasy Events", address: "1200 S Grand Ave", city: "Los Angeles", state: "CA", zip: "90015", lat: 34.0407, lon: -118.2690, website: "https://fabledfantasyevents.com" },
+  { id: "thirdplace-lfp", name: "Third Place Books (Lake Forest Park)", address: "17171 Bothell Way NE", city: "Lake Forest Park", state: "WA", zip: "98155", lat: 47.7541, lon: -122.2781, website: "https://www.thirdplacebooks.com" },
+  { id: "thirdplace-ravenna", name: "Third Place Books (Ravenna)", address: "6504 20th Ave NE", city: "Seattle", state: "WA", zip: "98115", lat: 47.6759, lon: -122.3061, website: "https://www.thirdplacebooks.com" },
+  { id: "thirdplace-seward", name: "Third Place Books (Seward Park)", address: "5041 Wilson Ave S", city: "Seattle", state: "WA", zip: "98118", lat: 47.5562, lon: -122.2691, website: "https://www.thirdplacebooks.com" },
+  { id: "sdcc-sandiego", name: "San Diego Comic-Con", address: "111 W Harbor Dr", city: "San Diego", state: "CA", zip: "92101", lat: 32.7068, lon: -117.1622, website: "https://www.comic-con.org" },
+  { id: "nycc-nyc", name: "New York Comic Con", address: "655 W 34th St", city: "New York", state: "NY", zip: "10001", lat: 40.7578, lon: -74.0026, website: "https://www.newyorkcomiccon.com" },
+  { id: "dragoncon-atlanta", name: "Dragon Con", address: "265 Peachtree St NE", city: "Atlanta", state: "GA", zip: "30303", lat: 33.7612, lon: -84.3861, website: "https://www.dragoncon.org" },
+  { id: "eccc-seattle", name: "Emerald City Comic Con", address: "705 Pike St", city: "Seattle", state: "WA", zip: "98101", lat: 47.6116, lon: -122.3329, website: "https://www.emeraldcitycomiccon.com" }
 ];
 
 const CURATED_BOOKS = [
@@ -329,6 +337,15 @@ function generateEvents() {
         eventDesc = `Unlock your writing potential in this interactive workshop led by acclaimed author ${book.author}. Inspired by the techniques used in "${book.title}", we will explore character development, world-building, and pacing. Limited seats available, reservation recommended.`;
       }
 
+      let eventWebsite = bookstore.website;
+      if (book.author === "Elise Kova" && Math.random() < 0.6) {
+        eventWebsite = "https://www.elisekova.com/events/";
+      } else if (bookstore.name.includes("Fabled") && Math.random() < 0.7) {
+        eventWebsite = "https://fabledfantasyevents.com";
+      } else if (Math.random() < 0.35) {
+        eventWebsite = `https://www.eventbrite.com/d/united-states/books--events/`;
+      }
+
       events.push({
         id: eventId++,
         title: eventTitle,
@@ -349,7 +366,7 @@ function generateEvents() {
         zip: bookstore.zip,
         lat: bookstore.lat,
         lon: bookstore.lon,
-        website: bookstore.website
+        website: eventWebsite
       });
     }
   }
@@ -360,7 +377,7 @@ function generateEvents() {
 }
 
 function bookbookstoreName(name) {
-  return name.endsWith("Bookstore") || name.endsWith("Booksellers") || name.endsWith("Company") || name.endsWith("Store") || name.endsWith("Books") || name.includes("Noble") || name.includes("Million") ? name : `${name} Bookstore`;
+  return name.endsWith("Bookstore") || name.endsWith("Booksellers") || name.endsWith("Company") || name.endsWith("Store") || name.endsWith("Books") || name.includes("Noble") || name.includes("Million") || name.includes("Con") || name.includes("Events") ? name : `${name} Bookstore`;
 }
 
 async function run() {

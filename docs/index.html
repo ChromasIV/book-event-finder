@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0.3">
+  <link rel="stylesheet" href="style.css?v=1.0.4">
   
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -113,6 +113,16 @@
           </div>
           <span class="helper-text">Filter by title, author, bookstore, city, state, or genre</span>
         </div>
+
+        <!-- Author Select Column -->
+        <div class="control-group">
+          <label for="filter-author"><i class="fa-solid fa-feather"></i> Filter by Author</label>
+          <select id="filter-author" aria-label="Filter by Author">
+            <option value="all">✍️ All Authors</option>
+            <!-- Dynamically populated from JS -->
+          </select>
+          <span class="helper-text">Quick filter by featured author</span>
+        </div>
       </div>
 
       <!-- Event Types Filter Row -->
@@ -177,7 +187,7 @@
   <footer>
     <div class="container footer-content">
       <p>© 2026 BookBound Finder. Built with elegant glassmorphism for book enthusiasts.</p>
-      <p class="footer-stats">Powered by local bookstore feeds & Open Library. Theme Version: 1.0.3</p>
+      <p class="footer-stats">Powered by local bookstore feeds & Open Library. Theme Version: 1.0.4</p>
     </div>
   </footer>
 
