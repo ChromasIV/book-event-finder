@@ -286,6 +286,12 @@ function createEventCard(evt) {
           <i class="fa-solid fa-road"></i> ${distanceStr}
         </div>` : ''}
         
+        ${evt.sourceUrl && evt.sourceName ? `
+        <div class="event-source">
+          <i class="fa-solid fa-circle-check" style="color: var(--secondary);"></i>
+          <span>Source: <a href="${evt.sourceUrl}" target="_blank" class="source-link" title="Verify event details at the official source">${escapeHtml(evt.sourceName)}</a></span>
+        </div>` : ''}
+        
         <p class="event-description" title="${evt.description}">${evt.description}</p>
       </div>
     </div>

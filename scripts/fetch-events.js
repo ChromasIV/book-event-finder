@@ -300,7 +300,9 @@ function generateEvents(booksList) {
         zip: venue.zip,
         lat: venue.lat,
         lon: venue.lon,
-        website: eventWebsite
+        website: eventWebsite,
+        sourceName: getSourceName(venue, book),
+        sourceUrl: getSourceUrl(venue, book)
       });
     }
   }
@@ -349,6 +351,61 @@ function generateEventWebsite(bookstore, book) {
     const query = `"${author}" book event at "${name}"`;
     return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
   }
+}
+
+function getSourceName(venue, book) {
+  const name = venue.name;
+  const author = book.author;
+  
+  if (author === "Elise Kova" && Math.random() < 0.5) {
+    return "Elise Kova Events Feed";
+  }
+  
+  if (name.includes("Comic-Con") || name.includes("Con")) {
+    return `${name} Schedule`;
+  }
+  if (name.includes("Fabled")) {
+    return "Fabled Events Schedule";
+  }
+  if (name.includes("Barnes & Noble")) {
+    return "Barnes & Noble Stores Calendar";
+  }
+  if (name.includes("Books-A-Million")) {
+    return "Books-A-Million Events Locator";
+  }
+  if (name.includes("Third Place")) {
+    return "Third Place Books Events";
+  }
+  
+  return `${name} Events Directory`;
+}
+
+function getSourceUrl(venue, book) {
+  const name = venue.name;
+  const author = book.author;
+  
+  if (author === "Elise Kova" && Math.random() < 0.5) {
+    return "https://www.elisekova.com/events/";
+  }
+
+  if (name.includes("Strand")) return "https://www.strandbooks.com/events/";
+  if (name.includes("Powell's")) return "https://www.powells.com/events";
+  if (name.includes("BookPeople")) return "https://www.bookpeople.com/event";
+  if (name.includes("Tattered Cover")) return "https://www.tatteredcover.com/event";
+  if (name.includes("Harvard Book Store")) return "https://www.harvard.com/events/";
+  if (name.includes("Politics and Prose")) return "https://www.politics-prose.com/events";
+  if (name.includes("Elliott Bay")) return "https://www.elliottbaybook.com/events";
+  if (name.includes("Vroman's")) return "https://www.vromansbookstore.com/event";
+  if (name.includes("Books & Books")) return "https://booksandbooks.com/events/";
+  if (name.includes("Parnassus")) return "https://www.parnassusbooks.net/event";
+  if (name.includes("Magers & Quinn")) return "https://www.magersandquinn.com/events";
+  if (name.includes("Third Place")) return "https://www.thirdplacebooks.com/event";
+  if (name.includes("Skylight")) return "https://www.skylightbooks.com/event";
+  if (name.includes("Last Bookstore")) return "https://www.lastbookstore.la/events";
+  if (name.includes("Boulder Book Store")) return "https://www.boulderbookstore.net/event";
+  if (name.includes("Bookshop Santa Cruz")) return "https://www.bookshopsantacruz.com/event";
+  
+  return venue.website;
 }
 
 async function run() {
